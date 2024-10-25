@@ -6,9 +6,9 @@ namespace TaskManagement.Core.Interfaces
     {
         Task<ProjetoDetalheDto> ObterProjetoDetalhe(Guid projetoId);
         Task<List<ProjetoDto>> ListarProjetos();
-        Task CriarProjeto(ProjetoDto projeto);
+        Task CriarProjeto(CriarProjetoDto projeto);
         Task RemoverProjeto(Guid projetoId);
-        Task AlterarProjeto(Guid projetoId, ProjetoDto projeto);
+        Task AlterarProjeto(Guid projetoId, AlterarProjetoDto projeto);
 
     }
 }

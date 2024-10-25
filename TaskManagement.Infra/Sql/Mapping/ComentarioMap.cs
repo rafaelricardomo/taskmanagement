@@ -18,6 +18,8 @@ namespace TaskManagement.Infra.Sql.Mapping
 
             builder.Property(p => p.DataAlteracao)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+            builder.HasOne<Usuario>(t => t.Usuario);
         }
     }
 }

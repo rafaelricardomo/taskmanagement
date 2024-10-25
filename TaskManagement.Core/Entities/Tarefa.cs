@@ -48,12 +48,12 @@ namespace TaskManagement.Core.Entities
                 Status = status;
         }
 
-        public void Comentar(string descricao)
+        public void Comentar(string descricao, Usuario usuario)
         {
             if (Comentarios == null)
                 Comentarios = new List<Comentario>();
 
-            var novoComentario = new Comentario(descricao);
+            var novoComentario = new Comentario(descricao,usuario);
 
             Comentarios.Add(novoComentario);
         }

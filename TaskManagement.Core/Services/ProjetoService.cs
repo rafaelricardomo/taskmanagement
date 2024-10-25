@@ -8,7 +8,7 @@ namespace TaskManagement.Core.Services
         IProjetoRepository projetoRepository
         ) : IProjetoService
     {
-        public async Task AlterarProjeto(Guid projetoId, ProjetoDto projetoDto)
+        public async Task AlterarProjeto(Guid projetoId, AlterarProjetoDto projetoDto)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return;
@@ -17,7 +17,7 @@ namespace TaskManagement.Core.Services
             await projetoRepository.Alterar(projeto);
         }
 
-        public async Task CriarProjeto(ProjetoDto projetoDto)
+        public async Task CriarProjeto(CriarProjetoDto projetoDto)
         {
             var projeto = new Projeto(projetoDto.nome);
             await projetoRepository.Criar(projeto);
@@ -26,7 +26,6 @@ namespace TaskManagement.Core.Services
         public async Task<List<ProjetoDto>> ListarProjetos()
         {
             var projetos = await projetoRepository.Listar();
-
             return projetos.Select(p => new ProjetoDto(p.Id, p.Nome)).ToList();
         }
 
@@ -53,7 +52,10 @@ namespace TaskManagement.Core.Services
         public async Task RemoverProjeto(Guid projetoId)
         {
             var projeto = await projetoRepository.Obter(projetoId);
-            if (projeto == null || projeto.PossuiTarefasPendentes) return;
+            if (projeto == null) return;
+
+            if (projeto.PossuiTarefasPendentes) 
+                throw new InvalidOperationException("Projeto possui tarefas pendentes");
 
             await projetoRepository.Remover(projetoId);
         }

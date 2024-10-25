@@ -13,11 +13,15 @@ namespace TaskManagement.Infra.Sql.Mapping
             builder.Property(p => p.Nome)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
 
+            builder.Property(p => p.Perfil)
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
+
             builder.Property(p => p.DataInclusao)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
 
             builder.Property(p => p.DataAlteracao)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
+
         }
     }
 }

@@ -11,21 +11,21 @@ namespace TaskManagement.Infra.Sql
         private void CreateUser()
         {
             var administrador = new Usuario(
-                "Admin", 
+                nameof(Core.Enums.PerfilUsuarioEnum.Administrador), 
                 Core.Enums.PerfilUsuarioEnum.Administrador
                 );
             
             usuarioRepository.Criar(administrador).Wait();
 
             var gerente = new Usuario(
-                "Gerente", 
+               nameof(Core.Enums.PerfilUsuarioEnum.Gerente), 
                 Core.Enums.PerfilUsuarioEnum.Gerente
                 );
 
             usuarioRepository.Criar(gerente).Wait();
 
             var dev = new Usuario(
-                "Dev",
+                nameof(Core.Enums.PerfilUsuarioEnum.Desenvolvedor),
                 Core.Enums.PerfilUsuarioEnum.Desenvolvedor
                 );
 

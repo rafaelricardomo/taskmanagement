@@ -3,9 +3,12 @@
     public class Comentario : Entity
     {
         public string Descricao { get; }
-        public Comentario(string descricao):base()
+        public Usuario Usuario { get; }
+
+        public Comentario(string descricao, Usuario usuario) : base()
         {
             Descricao = descricao;
+            Usuario = usuario;
         }
 
         protected Comentario() { }

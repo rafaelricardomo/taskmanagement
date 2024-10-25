@@ -11,6 +11,7 @@
             Usuario = usuario;
             Detalhes = new List<HistoricoDetalhe>();
             CriarDetalhesTarefas(tarefaAnterior, tarefaAtual);
+            CriarDetalhesComentarios(tarefaAnterior, tarefaAtual);
         }
 
         protected Historico() { }
@@ -20,16 +21,15 @@
             var historicoTitulo = new HistoricoDetalhe(
                 nameof(tarefaAnterior.Titulo),
                 tarefaAnterior.Titulo,
-                tarefaAtual.Titulo,
-                Usuario);
+                tarefaAtual.Titulo
+                );
 
             Detalhes.Add(historicoTitulo);
 
             var historicoDescricao = new HistoricoDetalhe(
                nameof(tarefaAnterior.Descricao),
                tarefaAnterior.Descricao,
-               tarefaAtual.Descricao,
-               Usuario
+               tarefaAtual.Descricao
                );
 
             Detalhes.Add(historicoDescricao);
@@ -37,8 +37,7 @@
             var historicoStatus = new HistoricoDetalhe(
                  nameof(tarefaAnterior.Status),
                  tarefaAnterior.Status.ToString(),
-                 tarefaAtual.Status.ToString(),
-                 Usuario
+                 tarefaAtual.Status.ToString()
                  );
 
             Detalhes.Add(historicoStatus);
@@ -46,8 +45,7 @@
             var historicoPrioridade = new HistoricoDetalhe(
                 nameof(tarefaAnterior.Prioridade),
                 tarefaAnterior.Prioridade.ToString(),
-                tarefaAtual.Prioridade.ToString(),
-                Usuario
+                tarefaAtual.Prioridade.ToString()
                 );
 
             Detalhes.Add(historicoPrioridade);
@@ -55,8 +53,7 @@
             var historicoVencimento = new HistoricoDetalhe(
                 nameof(tarefaAnterior.Vencimento),
                 tarefaAnterior.Vencimento.ToString(),
-                tarefaAtual.Vencimento.ToString(),
-                Usuario
+                tarefaAtual.Vencimento.ToString()
                 );
 
             Detalhes.Add(historicoVencimento);
@@ -64,16 +61,16 @@
 
         private void CriarDetalhesComentarios(Tarefa tarefaAnterior, Tarefa tarefaAtual)
         {
-            if (tarefaAnterior.Comentarios == null || !tarefaAnterior.Comentarios.Any()) return;
+            if (tarefaAtual.Comentarios == null || !tarefaAtual.Comentarios.Any()) return;
 
-            foreach (var comentarioAnterior in tarefaAnterior.Comentarios)
+            foreach (var comentarioAtual in tarefaAtual.Comentarios)
             {
-                var comentarioAtual = tarefaAtual.Comentarios.FirstOrDefault(c => c.Id == comentarioAnterior.Id);
+                var comentarioAnterior = tarefaAnterior.Comentarios?.FirstOrDefault(c => c.Id == comentarioAtual.Id);
+               
                 var historicoComentario = new HistoricoDetalhe(
-                    nameof(comentarioAnterior.Descricao),
-                    comentarioAnterior.Descricao.ToString(),
-                    comentarioAtual?.Descricao?.ToString(),
-                    Usuario
+                    nameof(tarefaAtual.Comentarios),
+                    comentarioAnterior?.Descricao ?? string.Empty,
+                    comentarioAtual?.Descricao ?? string.Empty
                     );
 
                 Detalhes.Add(historicoComentario);

@@ -27,6 +27,7 @@ namespace TaskManagement.Core.Entities
 
         public void AdicionarTarefa(string titulo, string descricao, DateTime vencimento, PrioridadeEnum prioridade)
         {
+           
             var novaTarefa = new Tarefa(
                 titulo,
                 descricao,
@@ -51,12 +52,12 @@ namespace TaskManagement.Core.Entities
 
         }
 
-        public void ComentarTarefa(Guid id, string descricao)
+        public void ComentarTarefa(Guid id, string descricao, Usuario usuario)
         {
             var tarefaAtual = Tarefas?.FirstOrDefault(t => t.Id == id);
             if (tarefaAtual != null)
             {
-                tarefaAtual.Comentar(descricao);
+                tarefaAtual.Comentar(descricao, usuario);
             }
 
         }

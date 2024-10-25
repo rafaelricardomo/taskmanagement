@@ -20,6 +20,8 @@ namespace TaskManagement.Infra.Sql.Mapping
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
 
             builder.HasMany<HistoricoDetalhe>(t => t.Detalhes);
+
+            builder.HasOne<Usuario>(t => t.Usuario);
         }
     }
 }

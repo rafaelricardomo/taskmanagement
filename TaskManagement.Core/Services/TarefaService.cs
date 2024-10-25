@@ -12,7 +12,7 @@ namespace TaskManagement.Core.Services
     {
        
 
-        public async Task AlterarTarefa(Guid projetoId, Guid tarefaId, TarefaDto tarefaDto)
+        public async Task AlterarTarefa(Guid projetoId, Guid tarefaId, AlterarTarefaDto tarefaDto)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return;
@@ -30,33 +30,41 @@ namespace TaskManagement.Core.Services
 
             await projetoRepository.Alterar(projeto);
 
-            await EnviarHistorico(tarefaAnterior, tarefaAtual);
+            var usuario = await usuarioRepository.Obter();
+            await EnviarHistorico(tarefaAnterior, tarefaAtual, usuario);
         }
 
-        public async Task CriarComentarioTarefa(Guid projetoId, Guid tarefaId, ComentarioDto comentarioDto)
+        public async Task CriarComentarioTarefa(Guid projetoId, Guid tarefaId, CriarComentarioDto comentarioDto)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return;
 
             var tarefaAnterior = projeto.ClonarTarefa(tarefaId);
 
+            var usuario = await usuarioRepository.Obter();
+
             projeto.ComentarTarefa(
                 tarefaId,
-                comentarioDto.descricao
+                comentarioDto.descricao,
+                usuario
             );
 
             var tarefaAtual = projeto.ObterTarefa(tarefaId);
 
             await projetoRepository.Alterar(projeto);
 
-            await EnviarHistorico(tarefaAnterior, tarefaAtual);
+            await EnviarHistorico(tarefaAnterior, tarefaAtual, usuario);
         }
 
 
-        public async Task CriarTarefa(Guid projetoId, TarefaDto tarefaDto)
+        public async Task CriarTarefa(Guid projetoId, CriarTarefaDto tarefaDto)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return;
+
+            if (projeto.AtingiuLimiteTarefas)
+                throw new InvalidOperationException("Projeto atingiu limite de tarefas");
+
 
             projeto.AdicionarTarefa(
                 tarefaDto.titulo,
@@ -70,11 +78,12 @@ namespace TaskManagement.Core.Services
 
             await projetoRepository.Alterar(projeto);
 
-            await EnviarHistorico(tarefaAnterior, tarefaAtual);
+            var usuario = await usuarioRepository.Obter();
+            await EnviarHistorico(tarefaAnterior, tarefaAtual, usuario);
 
         }
 
-        public async Task<List<TarefaDto>> ListarTarefas(Guid projetoId)
+        public async Task<List<TarefaDto>?> ListarTarefas(Guid projetoId)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return null;
@@ -89,7 +98,7 @@ namespace TaskManagement.Core.Services
                 ).ToList() ?? new List<TarefaDto>();
         }
 
-        public async Task<TarefaDetalheDto> ObterTarefaDetalhe(Guid projetoId, Guid tarefaId)
+        public async Task<TarefaDetalheDto?> ObterTarefaDetalhe(Guid projetoId, Guid tarefaId)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return null;
@@ -105,7 +114,10 @@ namespace TaskManagement.Core.Services
                 tarefa.Prioridade,
                 tarefa.Status,
                 tarefa.Comentarios.Select(c =>
-                    new ComentarioDto(c.Descricao)
+                    new ComentarioDto(
+                        c.Id, 
+                        c.Descricao
+                        )
                 ).ToList() ?? new List<ComentarioDto>()
                 );
         }
@@ -120,9 +132,8 @@ namespace TaskManagement.Core.Services
             await projetoRepository.Alterar(projeto);
         }
 
-        private async Task EnviarHistorico(Tarefa tarefaAnterior, Tarefa tarefaAtual)
-        {
-            var usuario = await usuarioRepository.Obter();
+        private async Task EnviarHistorico(Tarefa tarefaAnterior, Tarefa tarefaAtual, Usuario usuario)
+        {           
             var historico = new Historico(
                 "Histórico de tarefas",
                 tarefaAnterior,
