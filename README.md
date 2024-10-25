@@ -27,7 +27,7 @@ O sistema de gerenciamento de tarefas é uma **API** que possibilita organizar e
 **cd taskmanagement**
 
 2. Execute o comando para construir imagem docker do projeto
-**docker build -f taskmanagement.api/Dockerfile -t taskmanagementapi . **
+**docker build -f taskmanagement.api/Dockerfile -t taskmanagementapi .**
 
 3. Execute o comando para rodar a api no docker
 **docker run -p 8081:8081 -p 8080:8080 --name taskmanagementapi1  -d taskmanagementapi**
