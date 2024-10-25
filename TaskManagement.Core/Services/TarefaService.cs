@@ -134,6 +134,8 @@ namespace TaskManagement.Core.Services
 
         private async Task EnviarHistorico(Tarefa tarefaAnterior, Tarefa tarefaAtual, Usuario usuario)
         {           
+            if (tarefaAnterior == null || tarefaAtual == null || usuario == null) return;
+
             var historico = new Historico(
                 "Histórico de tarefas",
                 tarefaAnterior,

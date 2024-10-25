@@ -18,6 +18,8 @@
 
         private void CriarDetalhesTarefas(Tarefa tarefaAnterior, Tarefa tarefaAtual)
         {
+            if (tarefaAnterior == null || tarefaAtual == null) return;
+
             var historicoTitulo = new HistoricoDetalhe(
                 nameof(tarefaAnterior.Titulo),
                 tarefaAnterior.Titulo,
@@ -61,6 +63,8 @@
 
         private void CriarDetalhesComentarios(Tarefa tarefaAnterior, Tarefa tarefaAtual)
         {
+            if (tarefaAnterior == null || tarefaAtual == null) return;
+
             if (tarefaAtual.Comentarios == null || !tarefaAtual.Comentarios.Any()) return;
 
             foreach (var comentarioAtual in tarefaAtual.Comentarios)

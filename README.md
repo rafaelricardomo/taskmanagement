@@ -13,6 +13,7 @@ O sistema de gerenciamento de tarefas é uma **API** que possibilita organizar e
 
 1. Aprimorar o entendimento sobre estrutura de usuários, perfis e permissionamento.
 2. Detalhar vínculo do usuário com as tarefas do projeto.
+3. Buscar mais informações para construção dos relatórios.
 
 
 # Débitos técnicos
@@ -20,6 +21,7 @@ O sistema de gerenciamento de tarefas é uma **API** que possibilita organizar e
 1. Melhoria nos pontos de validações e padrão de retorno (ProblemDetails) dos endpoints das apis 
 2. Criação de script completo para banco de dados
 3. Avaliação do modelo de dados atual
+4. Implementar tratamentos de erros com logs e respostas nos endpoints.
 
 # Instruções para Docker
 
