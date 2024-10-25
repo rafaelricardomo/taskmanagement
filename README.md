@@ -11,7 +11,9 @@ O sistema de gerenciamento de tarefas é uma **API** que possibilita organizar e
 
 # Regras de negócio
 
-Aprimorar o entendimento sobre estrutura de usuários, perfis e permissionamento.
+1. Aprimorar o entendimento sobre estrutura de usuários, perfis e permissionamento.
+2. Detalhar vínculo do usuário com as tarefas do projeto.
+
 
 # Débitos técnicos
 
@@ -21,16 +23,16 @@ Aprimorar o entendimento sobre estrutura de usuários, perfis e permissionamento
 
 # Instruções para Docker
 
-Acesse a pasta "taskmanagement" do projeto via terminal
-cd taskmanagement
+1. Acesse a pasta "taskmanagement" do projeto via terminal com comando
+**cd taskmanagement**
 
-Em seguida, execute o comando para construir imagem docker do projeto
-docker build -f taskmanagement.api/Dockerfile -t taskmanagementapi . 
+2. Execute o comando para construir imagem docker do projeto
+**docker build -f taskmanagement.api/Dockerfile -t taskmanagementapi . **
 
-Após o término da construção, vamos executar o comando para rodar a api no docker
-docker run -p 8081:8081 -p 8080:8080 --name taskmanagementapi1  -d taskmanagementapi
+3. Execute o comando para rodar a api no docker
+**docker run -p 8081:8081 -p 8080:8080 --name taskmanagementapi1  -d taskmanagementapi**
 
-Agora basta acessar endereço no seu navegador
-http://localhost:8080/swagger
+4. Acesso endereço no seu navegador
+**http://localhost:8080/swagger**
 
 Obs. A conexão com banco de dados somente será estabelecida estando na mesma rede da sua imagem sqlserver local 
