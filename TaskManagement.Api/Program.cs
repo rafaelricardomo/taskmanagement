@@ -14,17 +14,14 @@ builder.Services.AddDbConfiguration(builder.Configuration);
 var app = builder.Build();
 
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app.RunDbInitializer();
+if (app.Environment.IsDevelopment())
+    app.RunDbInitializer();
 
 app.Run();
