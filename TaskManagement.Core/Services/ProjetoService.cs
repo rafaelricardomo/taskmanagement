@@ -26,10 +26,11 @@ namespace TaskManagement.Core.Services
         public async Task<List<ProjetoDto>> ListarProjetos()
         {
             var projetos = await projetoRepository.Listar();
-            return projetos.Select(p => new ProjetoDto(p.Id, p.Nome)).ToList();
+            return projetos?.Select(p => new ProjetoDto(p.Id, p.Nome))?.ToList()
+                ?? new List<ProjetoDto>();
         }
 
-        public async Task<ProjetoDetalheDto> ObterProjetoDetalhe(Guid projetoId)
+        public async Task<ProjetoDetalheDto?> ObterProjetoDetalhe(Guid projetoId)
         {
             var projeto = await projetoRepository.Obter(projetoId);
             if (projeto == null) return null;
